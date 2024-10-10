@@ -60,14 +60,22 @@ def add_new_dish():
     fobj = open('all_dish.txt', 'a')
     fobj.write(dcode + s + dname + s + dprice + '\n')
     fobj.close()
-
-    print('Dish Added Succesfully')
+    print('New Dish Added Succesfully')
 
 def update_dish():
     pass
 
 def add_new_emp():
-    pass
+    eid = input('Enter Employee ID : ')
+    ename = input('Enter Employee Name : ')
+    eaadhar = input('Enter Employee Aadhar Number : ')
+    emob = input('Enter Employee Monile Number : ')
+    epost = input("Enter Employee's Post : ")
+
+    fobj = open('all_employee.txt', 'a')
+    fobj.write(eid + s + ename + s + eaadhar + s + emob + s + epost + '\n')
+    fobj.close()
+    print('New Employee Details Added Succesfully')
 
 def remove_emp():
     pass
