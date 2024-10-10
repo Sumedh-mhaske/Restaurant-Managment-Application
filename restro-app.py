@@ -68,6 +68,8 @@ def add_new_dish():
     fobj.close()
     print('New Dish Added Succesfully')
 
+newstr = None
+
 def update_dish():
     dcode = get_dcode()
     updated_p = input('Enter the Price to Update : ')
@@ -75,7 +77,6 @@ def update_dish():
     fdata = open_file_in_r('d')
     found = False 
     ind = 0
-    newstr = None
     for i in fdata:
         ls = split(i)
         if ls[0] == dcode:
@@ -110,7 +111,30 @@ def remove_emp():
     pass
 
 def update_emp_info():
-    pass
+    #empid, empname, empaadhar, empmob, emppost
+    eid = get_eid()
+    updated_post = input("Enter Employee's Updated Position : ")
+
+    fdata = open_file_in_r('e')
+    found = False
+    ind = 0
+    for i in fdata:
+        ls = split(s)
+        if ls[0] == eid:
+            ls[4] = updated_post + '\n'
+            found = True 
+            newstr = s.join(ls)
+            fdata[ind] = newstr
+            break
+        else: ind += 1
+
+    if found == False: print('Invalid Employee Id')
+    elif found == True:
+        fobj = open('all_employee.txt', 'w')
+        fobj.writelines(fdata)
+        fobj.close()
+        print('Employee Details Updated')
+            
 
 def view_emp_info():
     eid = get_eid()    
