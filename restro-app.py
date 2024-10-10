@@ -53,7 +53,15 @@ def create_bill():
     pass
 
 def add_new_dish():
-    pass
+    dcode = input('Enter Dish Code : ')
+    dname = input('Enter Dish Price : ')
+    dprice = input('Enter Dish Price : ')
+
+    fobj = open('all_dish.txt', 'a')
+    fobj.write(dcode + s + dname + s + dprice + '\n')
+    fobj.close()
+
+    print('Dish Added Succesfully')
 
 def update_dish():
     pass
