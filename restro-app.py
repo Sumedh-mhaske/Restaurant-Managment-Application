@@ -56,8 +56,10 @@ def open_file_in_r(x):
 def create_bill():
     pass
 
+get_dcode = lambda : input('Enter Dish Code : ')
+
 def add_new_dish():
-    dcode = input('Enter Dish Code : ')
+    dcode = get_dcode()
     dname = input('Enter Dish Price : ')
     dprice = input('Enter Dish Price : ')
 
@@ -67,7 +69,30 @@ def add_new_dish():
     print('New Dish Added Succesfully')
 
 def update_dish():
-    pass
+    dcode = get_dcode()
+    updated_p = input('Enter the Price to Update : ')
+
+    fdata = open_file_in_r('d')
+    found = False 
+    ind = 0
+    newstr = None
+    for i in fdata:
+        ls = split(i)
+        if ls[0] == dcode:
+            found = True 
+            ls[2] = updated_p + '\n'
+            newstr = s.joind(ls)
+            fdata[ind] = newstr
+            break
+        else: ind += 1
+
+    if found == False: print('Invalid Dish Code')
+    if found == True:
+        dobj = open('all_dish.txt', 'w')
+        dobj.writelines(fdata)
+        dobj.close()
+        print('Price Updated Succesfully')
+
 
 def add_new_emp():
     eid = get_eid()
