@@ -28,6 +28,10 @@ Features of the application:-
 
 s = ','
 
+get_eid = lambda : input('Enter Employee Id : ')
+
+split = lambda x: x.split(s)
+
 # Function to open files in 'read-mode'
 def open_file_in_r(x):
     if x == 'd':
@@ -66,7 +70,7 @@ def update_dish():
     pass
 
 def add_new_emp():
-    eid = input('Enter Employee ID : ')
+    eid = get_eid()
     ename = input('Enter Employee Name : ')
     eaadhar = input('Enter Employee Aadhar Number : ')
     emob = input('Enter Employee Monile Number : ')
@@ -84,7 +88,21 @@ def update_emp_info():
     pass
 
 def view_emp_info():
-    pass
+    eid = get_eid()    
+
+    fdata = open_file_in_r('e')
+    found = False
+    for i in fdata:
+        ls = split(i)
+        if ls[0] == eid:
+            print('Employee Name :', ls[1])
+            print('Employee Aadhar Number :', ls[2])
+            print('Employee Mobile Number :', ls[3])
+            print("Employee's Position :", ls[4])
+            found = True
+            break
+
+    if found == False: print('Invalid Employee ID')
 
 def view_earnings():
     pass
