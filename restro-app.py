@@ -108,7 +108,25 @@ def add_new_emp():
     print('New Employee Details Added Succesfully')
 
 def remove_emp():
-    pass
+    eid = get_eid()
+
+    fdata = open_file_in_r('e')
+    found = False
+    ind = 0
+    for i in fdata:
+        ls = split(s)
+        if ls[0] == eid:
+            found = True
+            break
+        else: ind += 1
+    
+    if found == False: print('Invalid Employee ID')
+    if found == True: 
+        fdata.pop(ind)
+        fobj = open('all_employee.txt', 'w')
+        fobj.writelines(fdata)
+        fobj.close()
+        print('Data Removed Succefully')
 
 def update_emp_info():
     #empid, empname, empaadhar, empmob, emppost
