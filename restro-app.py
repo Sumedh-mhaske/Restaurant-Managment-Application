@@ -26,6 +26,29 @@ Features of the application:-
 
 ###################################################################
 
+s = ','
+
+# Function to open files in 'read-mode'
+def open_file_in_r(x):
+    if x == 'd':
+        fobj = open('all_dish.txt', 'r')
+        fdata = fobj.readlines()
+        fobj.close()
+
+        return fdata
+    elif x == 'e':
+        fobj = open('all_employees.txt', 'r')
+        fdata = fobj.readlines()
+        fobj.close()
+
+        return fdata
+    elif x == 'b':
+        fobj = open('all_bills.txt', 'r')
+        fdata = fobj.readlines()
+        fobj.close()
+
+        return fdata
+
 def create_bill():
     pass
 
