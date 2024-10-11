@@ -26,6 +26,7 @@ Features of the application:-
 
 ###################################################################
 import datetime
+import random
 
 def get_date():
     get = datetime.date.today()
@@ -33,7 +34,8 @@ def get_date():
     month = get.month
     year = get.year
 
-    return day + '/' + month + '/' + year
+    full_date = str(day) + '/' + str(month) + '/' + str(year)
+    return full_date
 
 s = ','
 
@@ -63,14 +65,32 @@ def open_file_in_r(x):
         return fdata
 
 def create_bill():
-    #bill_num, bill_total, bill_date
-    pass
+    ran_bill = random.randint(1000, 9999)
+    bill_num = ran_bill
+    fobj = open('all_bills.txt', 'a')
+    fobj.close()
+
+    fdata = open_file_in_r('b')
+    for i in fdata:
+        ls = split(i)
+        if ls[0] == ran_bill:
+            b = random.randint(1000, 9999)
+            bill_num = b
+
+    bill_tot = input('Enter Bill Total : ')
+    bill_date = get_date()
+
+    fobj = open('all_bills.txt', 'a')
+    fobj.write(str(bill_num) + s + bill_tot + s + bill_date + '\n')
+    fobj.close()
+    print('Bill Created Succesfully')
+
 
 get_dcode = lambda : input('Enter Dish Code : ')
 
 def add_new_dish():
     dcode = get_dcode()
-    dname = input('Enter Dish Price : ')
+    dname = input('Enter Dish Name : ')
     dprice = input('Enter Dish Price : ')
 
     fobj = open('all_dish.txt', 'a')
@@ -92,7 +112,7 @@ def update_dish():
         if ls[0] == dcode:
             found = True 
             ls[2] = updated_p + '\n'
-            newstr = s.joind(ls)
+            newstr = s.join(ls)
             fdata[ind] = newstr
             break
         else: ind += 1
@@ -112,7 +132,7 @@ def add_new_emp():
     emob = input('Enter Employee Monile Number : ')
     epost = input("Enter Employee's Post : ")
 
-    fobj = open('all_employee.txt', 'a')
+    fobj = open('all_employees.txt', 'a')
     fobj.write(eid + s + ename + s + eaadhar + s + emob + s + epost + '\n')
     fobj.close()
     print('New Employee Details Added Succesfully')
@@ -133,13 +153,12 @@ def remove_emp():
     if found == False: print('Invalid Employee ID')
     if found == True: 
         fdata.pop(ind)
-        fobj = open('all_employee.txt', 'w')
+        fobj = open('all_employees.txt', 'w')
         fobj.writelines(fdata)
         fobj.close()
         print('Data Removed Succefully')
 
 def update_emp_info():
-    #empid, empname, empaadhar, empmob, emppost
     eid = get_eid()
     updated_post = input("Enter Employee's Updated Position : ")
 
@@ -158,7 +177,7 @@ def update_emp_info():
 
     if found == False: print('Invalid Employee Id')
     elif found == True:
-        fobj = open('all_employee.txt', 'w')
+        fobj = open('all_employees.txt', 'w')
         fobj.writelines(fdata)
         fobj.close()
         print('Employee Details Updated')
@@ -175,7 +194,7 @@ def view_emp_info():
             print('Employee Name :', ls[1])
             print('Employee Aadhar Number :', ls[2])
             print('Employee Mobile Number :', ls[3])
-            print("Employee's Position :", ls[4])
+            print("Employee's Position :", ls[4], end='')
             found = True
             break
 
@@ -188,10 +207,11 @@ def today_earn():
     
     for i in fdata:
         ls = split(i)
-        if ls[2] == date:
-            add += ls[1]
+        if ls[2] == date + '\n':
+            add += int(ls[1])
+        else: add = add
         
-    print("Today's Total Earning :", add)
+    print(" Today's Total Earning :", add)
 
 def date_earn():
     date = input('Enter Date to View Earning : ')
@@ -200,10 +220,11 @@ def date_earn():
 
     for i in fdata:
         ls = split(i)
-        if ls[2] == date:
-            add += ls[1]
+        if ls[2] == date + '\n':
+            add += int(ls[1])
+        else: add = add
 
-    print(date, 'Total Earning :', add)
+    print('', date, 'Total Earning :', add)
 
 
 def between_date():
@@ -221,7 +242,7 @@ def view_earnings():
     print(" 1 - View Today's Earning")
     print(" 2 - View Earning of Specific Date")
     print(" 3 - View Earning between Specific Dates")
-    ch = input('Enter your choice : ')
+    ch = int(input(' Enter your choice : '))
 
     if ch == 1: today_earn() 
     elif ch == 2: date_earn()
@@ -239,6 +260,7 @@ def operations():
     print('6 - Update Employee Information')
     print('7 - View Employee Information')
     print('8 - View Earnings')
+    print('0 - Exit')
 
 
 def check_op():
@@ -250,10 +272,11 @@ def check_op():
     elif ch == 6: update_emp_info()
     elif ch == 7: view_emp_info()
     elif ch == 8: view_earnings()
+    elif ch == 0: exit(0)
 
 
 while True:
     operations()
-    ch = input('Enter Your Choice : ')
+    ch = int(input('Enter Your Choice : '))
     check_op()
 
