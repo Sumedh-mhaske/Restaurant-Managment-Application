@@ -25,6 +25,15 @@ Features of the application:-
 '''
 
 ###################################################################
+import datetime
+
+def get_date():
+    get = datetime.date.today()
+    day = get.day
+    month = get.month
+    year = get.year
+
+    return day + '/' + month + '/' + year
 
 s = ','
 
@@ -54,6 +63,7 @@ def open_file_in_r(x):
         return fdata
 
 def create_bill():
+    #bill_num, bill_total, bill_date
     pass
 
 get_dcode = lambda : input('Enter Dish Code : ')
@@ -114,7 +124,7 @@ def remove_emp():
     found = False
     ind = 0
     for i in fdata:
-        ls = split(s)
+        ls = split(i)
         if ls[0] == eid:
             found = True
             break
@@ -137,7 +147,7 @@ def update_emp_info():
     found = False
     ind = 0
     for i in fdata:
-        ls = split(s)
+        ls = split(i)
         if ls[0] == eid:
             ls[4] = updated_post + '\n'
             found = True 
@@ -171,10 +181,53 @@ def view_emp_info():
 
     if found == False: print('Invalid Employee ID')
 
-def view_earnings():
+def today_earn(): 
+    fdata = open_file_in_r('b')
+    date = get_date()
+    add = 0
+    
+    for i in fdata:
+        ls = split(i)
+        if ls[2] == date:
+            add += ls[1]
+        
+    print("Today's Total Earning :", add)
+
+def date_earn():
+    date = input('Enter Date to View Earning : ')
+    fdata = open_file_in_r('b')
+    add = 0
+
+    for i in fdata:
+        ls = split(i)
+        if ls[2] == date:
+            add += ls[1]
+
+    print(date, 'Total Earning :', add)
+
+
+def between_date():
+    # first_date = input('Enter Start Date : ')
+    # end_date = input('Enter End Date : ')
+    # fdata = open_file_in_r('b')
+    # add = 0
+
+    # for i in fdata:
+    #     ls = split(i)
+    #     if ls[2] == first_date and ls[2] == end_date:
     pass
 
+def view_earnings():
+    print(" 1 - View Today's Earning")
+    print(" 2 - View Earning of Specific Date")
+    print(" 3 - View Earning between Specific Dates")
+    ch = input('Enter your choice : ')
 
+    if ch == 1: today_earn() 
+    elif ch == 2: date_earn()
+    elif ch == 3: between_date()
+
+    
 def operations():
     input()
     print('Select Operation:')
