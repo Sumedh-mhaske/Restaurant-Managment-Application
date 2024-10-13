@@ -41,7 +41,7 @@ s = ','
 
 get_eid = lambda : input('Enter Employee Id : ')
 
-split = lambda x: x.split(s)
+split_by = lambda x: x.split(s)
 
 # Function to open files in 'read-mode'
 def open_file_in_r(x):
@@ -72,7 +72,7 @@ def create_bill():
 
     fdata = open_file_in_r('b')
     for i in fdata:
-        ls = split(i)
+        ls = split_by(i)
         if ls[0] == ran_bill:
             b = random.randint(1000, 9999)
             bill_num = b
@@ -108,7 +108,7 @@ def update_dish():
     found = False 
     ind = 0
     for i in fdata:
-        ls = split(i)
+        ls = split_by(i)
         if ls[0] == dcode:
             found = True 
             ls[2] = updated_p + '\n'
@@ -144,7 +144,7 @@ def remove_emp():
     found = False
     ind = 0
     for i in fdata:
-        ls = split(i)
+        ls = split_by(i)
         if ls[0] == eid:
             found = True
             break
@@ -166,7 +166,7 @@ def update_emp_info():
     found = False
     ind = 0
     for i in fdata:
-        ls = split(i)
+        ls = split_by(i)
         if ls[0] == eid:
             ls[4] = updated_post + '\n'
             found = True 
@@ -189,7 +189,7 @@ def view_emp_info():
     fdata = open_file_in_r('e')
     found = False
     for i in fdata:
-        ls = split(i)
+        ls = split_by(i)
         if ls[0] == eid:
             print('Employee Name :', ls[1])
             print('Employee Aadhar Number :', ls[2])
@@ -206,7 +206,7 @@ def today_earn():
     add = 0
     
     for i in fdata:
-        ls = split(i)
+        ls = split_by(i)
         if ls[2] == date + '\n':
             add += int(ls[1])
         else: add = add
@@ -219,24 +219,29 @@ def date_earn():
     add = 0
 
     for i in fdata:
-        ls = split(i)
+        ls = split_by(i)
         if ls[2] == date + '\n':
             add += int(ls[1])
-        else: add = add
 
     print('', date, 'Total Earning :', add)
 
 
 def between_date():
-    # first_date = input('Enter Start Date : ')
-    # end_date = input('Enter End Date : ')
-    # fdata = open_file_in_r('b')
-    # add = 0
+    first_date = input(' Enter Start Date : ')
+    end_date = input(' Enter End Date : ')
+    fdata = open_file_in_r('b')
+    add = 0
 
-    # for i in fdata:
-    #     ls = split(i)
-    #     if ls[2] == first_date and ls[2] == end_date:
-    pass
+    for i in fdata:
+        ls = split_by(i)
+        sp = ls[2].split('/')
+        fd = first_date.split('/')
+        ed = end_date.split('/')
+
+        if (int(sp[0]) >= int(fd[0]) and int(sp[0]) <= int(ed[0])) and (int(sp[1]) >= int(fd[1]) and int(sp[1]) <= int(ed[1])):
+            add += int(ls[1])
+
+    print(' Earning between', first_date, 'and', end_date, ':', add)
 
 def view_earnings():
     print(" 1 - View Today's Earning")
