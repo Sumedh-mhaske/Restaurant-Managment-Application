@@ -144,7 +144,8 @@ def update_dish():
 
 
 def add_new_emp():
-    eid = get_eid()
+    fdata = open_file_in_r('e')
+    eid = str(len(fdata) + 1)
     ename = input('Enter Employee Name : ')
     eaadhar = input('Enter Employee Aadhar Number : ')
     emob = input('Enter Employee Monile Number : ')
