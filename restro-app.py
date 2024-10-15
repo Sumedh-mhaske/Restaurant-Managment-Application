@@ -64,26 +64,46 @@ def open_file_in_r(x):
 
         return fdata
 
-def create_bill():
-    ran_bill = random.randint(1000, 9999)
-    bill_num = ran_bill
-    fobj = open('all_bills.txt', 'a')
-    fobj.close()
-
-    fdata = open_file_in_r('b')
+def get_dish_price(code):
+    fdata = open_file_in_r('d')
+    found = False
     for i in fdata:
         ls = split_by(i)
-        if ls[0] == ran_bill:
-            b = random.randint(1000, 9999)
-            bill_num = b
+        if ls[0] == str(code):
+            found = True
+            return ls[1], int(ls[2][0:len(ls[2]) - 1])
 
-    bill_tot = input('Enter Bill Total : ')
-    bill_date = get_date()
+    if found == False: 
+        print('   Invalid Dish Code')
+        return None, -1
+ 
+def create_bill():
+    fdata = open_file_in_r('b')
+    bill_code = str(len(fdata) + 1)
+    print('What would like to have')
+    final_bill_amt = 0
 
-    fobj = open('all_bills.txt', 'a')
-    fobj.write(str(bill_num) + s + bill_tot + s + bill_date + '\n')
-    fobj.close()
-    print('Bill Created Succesfully')
+    while True:
+        d_code = int(input('Enter dish code or 0 : '))
+
+        if d_code != 0:
+            name, pr = get_dish_price(d_code)
+            if pr == -1: 
+                continue
+            elif pr != -1:
+                qnt = int(input('Quantity of ' + name + ' : '))
+                tot = pr * qnt
+                final_bill_amt = final_bill_amt + tot
+        elif d_code == 0:
+            if final_bill_amt > 0:
+                bill_date = get_date()
+                fobj = open('all_bills.txt', 'a')
+                fobj.write(bill_code + s + str(final_bill_amt) + s + bill_date + '\n')
+                print('Bill Created Succefully')
+                break
+            else: 
+                print('Bill is Not Created!')
+                break
 
 
 get_dcode = lambda : input('Enter Dish Code : ')
@@ -279,6 +299,10 @@ def check_op():
     elif ch == 8: view_earnings()
     elif ch == 0: exit(0)
 
+
+open('all_dish.txt', 'a')
+open('all_employees.txt', 'a')
+open('all_bills.txt', 'a')
 
 while True:
     operations()
